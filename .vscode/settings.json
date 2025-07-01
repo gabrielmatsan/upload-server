@@ -1,9 +1,28 @@
 {
-  "editor.formatOnSave": true,
-  "[typescript]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
+  // DESABILITAR - Remove organização automática de imports
   "editor.codeActionsOnSave": {
-    "source.organizeImports": "explicit"
-  }
+    "source.fixAll.eslint": "explicit", // REMOVER
+    "source.sortImports": "explicit", // REMOVER  
+    "source.fixAll.ts": "explicit", // REMOVER
+    "quickfix.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
+  },
+  // MODIFICAR - Formatadores por linguagem para usar Biome
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome" // era "vscode.typescript-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome" // era "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome" // era "esbenp.prettier-vscode"
+  },
+  // DESABILITAR ESLint completamente
+  "eslint.enable": false,
+  // ADICIONAR - Configurações específicas para desabilitar organização de imports da IDE
+  "typescript.preferences.organizeImports": false,
+  "javascript.preferences.organizeImports": false,
+  // MANTER - Apenas para movimentação de arquivos (não conflita)
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always"
 }
