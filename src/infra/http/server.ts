@@ -5,13 +5,15 @@ import fastifySwaggerUi from '@fastify/swagger-ui'
 import fastify from 'fastify'
 import {
   hasZodFastifySchemaValidationErrors,
-  jsonSchemaTransform,
   serializerCompiler,
   validatorCompiler,
   type ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 import { env } from '@/env/env'
+import { transformSwaggerSchema } from '@/utils/transform-swagger-schema'
+import { getUploadsRoutes } from './routes/get-uploads-images'
 import { uploadImageRoute } from './routes/upload-image'
+import { exportUploadsRoute } from './routes/export-uploads'
 
 const server = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -41,7 +43,7 @@ server.register(fastifySwagger, {
       version: '1.0.0',
     },
   },
-  transform: jsonSchemaTransform,
+  transform: transformSwaggerSchema,
 })
 
 server.register(fastifySwaggerUi, {
@@ -53,6 +55,9 @@ server.register(fastifyCors, {
 })
 
 server.register(uploadImageRoute)
+server.register(getUploadsRoutes)
+server.register(exportUploadsRoute)
+
 server.listen({ port: env.PORT, host: '0.0.0.0' }).then(() => {
   console.log(`Server is running on port ${env.PORT}`)
   console.log(`Docs: http://localhost:${env.PORT}/docs`)
