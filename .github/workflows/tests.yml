@@ -1,5 +1,5 @@
 name: Tests E2E
-
+# Test: 1
 on:
   pull_request:
     branches:
@@ -10,7 +10,6 @@ jobs:
   run-ci:
     name: Run Tests E2E
     runs-on: ubuntu-latest
-
 
     services:
       postgres:
@@ -32,7 +31,7 @@ jobs:
 
       - uses: pnpm/action-setup@v4 # setup pnpm
         name: Install pnpm
-        with: 
+        with:
           version: 9.15.0
           run_install: false # nao fazer o install automatico
 
@@ -42,9 +41,6 @@ jobs:
           node-version: 22
           cache: pnpm
 
-      
       - run: pnpm install --frozen-lockfile #frozen-lockfile para garantir que as dependencias nao serao alteradas
 
       - run: pnpm run test
-
-
