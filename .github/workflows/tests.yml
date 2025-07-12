@@ -1,5 +1,5 @@
 name: Tests E2E
-
+# Test: 1
 on:
   pull_request:
     branches:
@@ -11,6 +11,14 @@ jobs:
     name: Run Tests E2E
     runs-on: ubuntu-latest
 
+    env:
+      DATABASE_URL: postgresql://docker:docker@localhost:5432/upload_test
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_ACCESS_KEY_ID }}
+      CLOUDFLARE_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_SECRET_ACCESS_KEY }}
+      CLOUDFLARE_BUCKET_NAME: ${{ secrets.CLOUDFLARE_BUCKET_NAME }}
+      CLOUDFLARE_PUBLIC_URL: ${{ secrets.CLOUDFLARE_PUBLIC_URL }}
+      CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
 
     services:
       postgres:
@@ -32,8 +40,8 @@ jobs:
 
       - uses: pnpm/action-setup@v4 # setup pnpm
         name: Install pnpm
-        with: 
-          version: 9.15.0
+        with:
+          version: 10.11.0
           run_install: false # nao fazer o install automatico
 
       - name: Install Node.js
@@ -42,9 +50,6 @@ jobs:
           node-version: 22
           cache: pnpm
 
-      
       - run: pnpm install --frozen-lockfile #frozen-lockfile para garantir que as dependencias nao serao alteradas
 
       - run: pnpm run test
-
-
